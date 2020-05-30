@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Poster {
     /**
-     * 主键id 用户id
+     * 主键id 海报id
      */
     @Id
     private Long id;

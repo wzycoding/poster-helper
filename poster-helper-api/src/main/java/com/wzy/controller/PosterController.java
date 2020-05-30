@@ -18,16 +18,16 @@ public class PosterController {
     @PostMapping("create")
     public Result create(@RequestBody PosterBo posterBo) {
 
-        return Result.ok();
+        return Result.success();
     }
 
     /**
      * 用户创建海报列表
      */
     @GetMapping("list")
-    public PagedGridResult list() {
+    public Result list() {
 
-        return new PagedGridResult();
+        return Result.success(new PagedGridResult());
     }
 
     /**
@@ -36,7 +36,7 @@ public class PosterController {
     @GetMapping("detail/{posterId}")
     public Result detail(@PathVariable long posterId) {
 
-        return Result.ok();
+        return Result.success();
     }
 
 
