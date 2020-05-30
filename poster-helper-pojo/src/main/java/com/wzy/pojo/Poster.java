@@ -64,6 +64,20 @@ public class Poster {
     private Date updateTime;
 
     /**
+     * 生成海报图片地址
+     */
+    @Column(name = "poster_img_url")
+    private String posterImgUrl;
+
+    public String getPosterImgUrl() {
+        return posterImgUrl;
+    }
+
+    public void setPosterImgUrl(String posterImgUrl) {
+        this.posterImgUrl = posterImgUrl;
+    }
+
+    /**
      * 获取主键id 用户id
      *
      * @return id - 主键id 用户id

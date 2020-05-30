@@ -15,5 +15,6 @@
     <result column="discount_date" property="discountDate" jdbcType="TIMESTAMP" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="poster_img_url" property="posterImgUrl" jdbcType="VARCHAR" />
   </resultMap>
 </mapper>
