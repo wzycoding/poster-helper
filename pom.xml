@@ -11,7 +11,7 @@
         <module>poster-helper-api</module>
         <module>poster-helper-service</module>
         <module>poster-helper-common</module>
-        <module>post-helper-mapper</module>
+        <module>poster-helper-mapper</module>
         <module>poster-helper-pojo</module>
         <module>poster-helper-mapper</module>
     </modules>
@@ -43,13 +43,13 @@
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
             </exclusions>
-            <!--            <exclusions>-->
-            <!--                <exclusion>-->
-            <!--                    &lt;!&ndash; 排除jar包&ndash;&gt;-->
-            <!--                    <groupId>org.springframework.boot</groupId>-->
-            <!--                    <artifactId>spring-boot-starter-logging</artifactId>-->
-            <!--                </exclusion>-->
-            <!--            </exclusions>-->
+<!--                        <exclusions>-->
+<!--                            <exclusion>-->
+<!--                                &lt;!&ndash; 排除jar包&ndash;&gt;-->
+<!--                                <groupId>org.springframework.boot</groupId>-->
+<!--                                <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--                            </exclusion>-->
+<!--                        </exclusions>-->
         </dependency>
 
         <dependency>

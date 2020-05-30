@@ -18,6 +18,12 @@
             <groupId>com.wzy</groupId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!-- 引入flywaydb数据库版本控制工具 -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
