@@ -9,6 +9,7 @@ import com.wzy.pojo.bo.LoginBo;
 import com.wzy.pojo.bo.RegisterBo;
 import com.wzy.pojo.vo.UserVo;
 import com.wzy.service.UserService;
+import com.wzy.utils.CookieUtils;
 import com.wzy.utils.ErrorEnum;
 import com.wzy.utils.MD5Utils;
 import com.wzy.utils.UUIDUtil;
@@ -40,6 +41,14 @@ public class UserServiceImpl implements UserService {
         String username = bo.getUsername();
         String password = bo.getPassword();
         String verifyCode = bo.getVerifyCode();
+
+        // 校验验证码
+        String _code = CookieUtils.getCookieValue(request, VERIFY_PREFIX);
+        HttpSession currentSession = request.getSession();
+        String realVerifyCode = (String) currentSession.getAttribute(VERIFY_PREFIX + _code);
+//        if (!verifyCode.equals(realVerifyCode)) {
+//            ErrorEnum.VERIFY_CODE_ERROR.throwException();
+//        }
 
         // 对用户输入密码进行md5加密
         String md5Password = MD5Utils.getMD5Str(password);
@@ -85,7 +94,7 @@ public class UserServiceImpl implements UserService {
         addCookie(response, uuid);
         captcha.out(response.getOutputStream());
         String verifyCode = captcha.text();
-        String realKey = VERIFY_PREFIX  + "_" + uuid;
+        String realKey = VERIFY_PREFIX + uuid;
         HttpServletRequest currentRequest = RequestHolder.getCurrentRequest();
         HttpSession session = currentRequest.getSession();
         session.setAttribute(realKey, verifyCode);

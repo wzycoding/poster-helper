@@ -1,15 +1,16 @@
 package com.wzy.service;
 
+
 import com.wzy.pojo.bo.PosterBo;
 import com.wzy.pojo.vo.PosterVo;
+import com.wzy.utils.PagedGridResult;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.io.IOException;
 
 public interface PosterService {
-    void create(PosterBo posterBo);
+    void create(PosterBo posterBo) throws IOException, IllegalAccessException;
 
-    List<PosterVo> list();
+    PagedGridResult list(int page, int pageSize);
 
-    int countList();
+    PosterVo detail(long posterId);
 }
