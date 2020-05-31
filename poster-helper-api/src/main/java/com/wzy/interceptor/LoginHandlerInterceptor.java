@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,16 +18,27 @@ import javax.servlet.http.HttpSession;
  */
 @Configuration
 public class LoginHandlerInterceptor implements HandlerInterceptor {
-
+    public static final String TOKEN_PREFIX = "_token";
+    public static final String VERIFY_PREFIX = "_code";
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String token = request.getHeader("token");
+        String token = null;
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null || cookies.length == 0) {
+            // 用户未登录，直接抛出异常
+            ErrorEnum.NOT_LOGIN.throwException();
+        }
+        for (Cookie cookie : cookies) {
+            if (TOKEN_PREFIX.equals(cookie.getName())) {
+                token = cookie.getValue();
+            }
+        }
         if (StringUtils.isEmpty(token)) {
             // 用户未登录，直接抛出异常
             ErrorEnum.NOT_LOGIN.throwException();
         }
         HttpSession session = request.getSession();
-        Users user = (Users) session.getAttribute(token);
+        Users user = (Users) session.getAttribute(TOKEN_PREFIX + token);
         if (user == null) {
             // 存在token，但是用户信息为空，抛出异常
             ErrorEnum.LOGIN_ILLEGAL.throwException();
