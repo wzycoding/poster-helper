@@ -7,6 +7,8 @@ public enum ErrorEnum {
     SERVER_ERROR(10001, "服务器错误"),
     PARAM_ERROR(10002, "参数错误"),
     VERIFY_CODE_ERROR(10003, "验证码错误"),
+    UPLOAD_IMG_ERROR(10004, "图片格式错误"),
+    UPLOAD_NOT_BLANK(10005, "上传文件不能为空"),
 
 
     /****************用户错误码*********************/
