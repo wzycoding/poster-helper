@@ -24,6 +24,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -92,16 +93,20 @@ public class PosterServiceImpl implements PosterService {
     }
 
     public String generatePoster(PosterBo posterBo) throws IllegalAccessException, IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
         // 测试注解, 图片请自行添加到resources下 ClassPathResource 需要引入spring
-        BufferedImage background = ImageIO.read(new ClassPathResource("image/background.jpg").getInputStream());
-        BufferedImage head = ImageIO.read(new ClassPathResource("image/headimg.jpeg").getInputStream());
+        BufferedImage background = ImageIO.read(new ClassPathResource("image/background.png").getInputStream());
+        BufferedImage head = ImageIO.read(new ClassPathResource("image/item.jpeg").getInputStream());
+        BufferedImage qrCode = ImageIO.read(new ClassPathResource("image/QR.jpg").getInputStream());
         SimplePoster poster = SimplePoster.builder()
                 .backgroundImage(background)
-                .head(head)
-                .nickName("金凯达")
-                .itemName("西红柿")
-                .slogan("命运多舛，痴迷淡然。挥别了青春，数不尽的车站。甘于平凡，却不甘平凡地溃败。")
+                .description(posterBo.getItemName() + " " + posterBo.getDescription())
+                .priceNormal("原价 ￥" + posterBo.getPriceNormal())
+                .priceDiscount("会员福利 ￥" + posterBo.getPriceDiscount())
+                .discountDate(sdf.format( posterBo.getDiscountDate()))
+                .qrCode(qrCode)
                 .mainImage(head)
+                .slogan("每月6、16、26特价日")
                 .build();
         PosterDefaultImpl<SimplePoster> impl = new PosterDefaultImpl<>();
         BufferedImage test = impl.annotationDrawPoster(poster).draw(null);

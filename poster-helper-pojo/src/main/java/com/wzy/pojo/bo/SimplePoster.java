@@ -19,38 +19,50 @@ public class SimplePoster extends AbstractDefaultPoster {
     /**
      * 背景图
      */
-    @PosterBackground(width = 365,height = 666)
+    @PosterBackground(width = 1080,height = 1503)
     private BufferedImage backgroundImage;
 
     /**
-     * 头像
+     * 福利价
      */
-    @PosterImageCss(position = {27,27},width = 36, height = 36, circle = true)
-    private BufferedImage head;
+    @PosterFontCss(position = {55,950},center = true, size = 55, color = {200,98,48})
+    private String priceDiscount;
 
     /**
-     * 昵称
+     * 正常价
      */
-    @PosterFontCss(position = {71,32}, color = {255,255,255})
-    private String nickName;
-
-    /**
-     * 广告语
-     */
-    @PosterFontCss(position = {27,70},center = true, size = 22, color = {255,255,255}, canNewLine={1,221,7})
-    private String slogan;
-
-    /**
-     * 商品名称
-     */
-    @PosterFontCss(position = {57,70},center = true, size = 22, color = {255,255,255}, canNewLine={1,221,7})
-    private String itemName;
+    @PosterFontCss(position = {55,1040},center = true, size = 42, color = {128,128,128})
+    private String priceNormal;
 
     /**
      * 主图
      */
-    @PosterImageCss(position = {27,172},width = 168,height = 168)
+    @PosterImageCss(position = {55,300},width = 600,height = 600)
     private BufferedImage mainImage;
+
+    /**
+     * 商品描述
+     */
+    @PosterFontCss(position = {55,1100},center = true, size = 42, color = {102,102,102}, canNewLine={1,600,7})
+    private String description;
+
+    /**
+     * 特价日期
+     */
+    @PosterFontCss(position = {170,130},center = true, size = 48, color = {102,102,102})
+    private String discountDate;
+
+    /**
+     * slogan
+     */
+    @PosterFontCss(position = {170,1400},center = true, size = 42)
+    private String slogan;
+
+    /**
+     * 二维码
+     */
+    @PosterImageCss(position = {770,1150},width = 260,height = 260)
+    private BufferedImage qrCode;
 
     @Tolerate
     public SimplePoster() {}
