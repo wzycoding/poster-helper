@@ -21,7 +21,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getLoginHandlerInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/", "/api/v1.0/user/verifyCode", "/api/v1.0/user/login", "/api/v1.0/user/register");
+                .excludePathPatterns("/", "/api/v1.0/user/verifyCode", "/api/v1.0/user/login", "/api/v1.0/user/register",
+                        "/poster/img/**");
     }
 
     // 实现静态资源的映射

@@ -8,7 +8,7 @@ import com.wzy.utils.PagedGridResult;
 import java.io.IOException;
 
 public interface PosterService {
-    void create(PosterBo posterBo) throws IOException, IllegalAccessException;
+    void create(PosterBo posterBo, String imageUserFaceLocation, String imageServerUrl) throws IOException, IllegalAccessException;
 
     PagedGridResult list(int page, int pageSize);
 

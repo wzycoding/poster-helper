@@ -1,5 +1,6 @@
 package com.wzy.controller;
 
+import com.wzy.config.FileUpload;
 import com.wzy.pojo.Poster;
 import com.wzy.pojo.bo.PosterBo;
 import com.wzy.pojo.vo.PosterVo;
@@ -22,12 +23,15 @@ public class PosterController {
     @Resource
     private PosterService posterService;
 
+    @Resource
+    private FileUpload fileUpload;
+
     /**
      * 创建海报
      */
     @PostMapping("create")
     public Result create(@RequestBody @Valid PosterBo posterBo) throws IOException, IllegalAccessException {
-        posterService.create(posterBo);
+        posterService.create(posterBo, fileUpload.getImageUserFaceLocation(), fileUpload.getImageServerUrl());
         return Result.success();
     }
 

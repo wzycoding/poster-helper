@@ -1,5 +1,7 @@
 package com.wzy.pojo;
 
+import org.apache.ibatis.annotations.Options;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.util.Date;
