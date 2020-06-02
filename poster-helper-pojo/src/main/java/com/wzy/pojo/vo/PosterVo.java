@@ -54,13 +54,13 @@ public class PosterVo {
      * 特价日期
      */
     @Column(name = "discount_date")
-    private Date discountDate;
+    private String discountDate;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    private Date createTime;
+    private String createTime;
 
 
 }

@@ -30,7 +30,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +46,7 @@ public class PosterServiceImpl implements PosterService {
     private PosterMapperCustom posterMapperCustom;
 
     @Override
-    public void create(PosterBo posterBo, String imageUserFaceLocation, String imageServerUrl) throws IOException, IllegalAccessException {
+    public Poster create(PosterBo posterBo, String imageUserFaceLocation, String imageServerUrl) throws IOException, IllegalAccessException {
         Users currentUser = RequestHolder.getCurrentUser();
         Poster newPoster = new Poster();
         BeanUtils.copyProperties(posterBo, newPoster);
@@ -60,7 +59,10 @@ public class PosterServiceImpl implements PosterService {
         Poster posterUpdate = new Poster();
         posterUpdate.setId(newPoster.getId());
         posterUpdate.setPosterImgUrl(posterUrl);
+        newPoster.setId(newPoster.getId());
+        newPoster.setPosterImgUrl(posterUrl);
         posterMapper.updateByPrimaryKeySelective(posterUpdate);
+        return newPoster;
     }
 
     @Override
@@ -69,12 +71,18 @@ public class PosterServiceImpl implements PosterService {
         Example posterExp = new Example(Poster.class);
         Example.Criteria criteria = posterExp.createCriteria();
         criteria.andEqualTo("createUserId", currentUser.getId());
-        PageHelper.startPage(page, pageSize);
+        // todo: 将来分页
+//        PageHelper.startPage(page, pageSize);
         List<Poster> posterList = posterMapper.selectByExample(posterExp);
         List<PosterVo> posterVoList = Lists.newArrayList();
         for (Poster poster : posterList) {
+            SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sdfDateTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
             PosterVo vo = new PosterVo();
             BeanUtils.copyProperties(poster, vo);
+            vo.setCreateTime(sdfDateTime.format(poster.getCreateTime()));
+            vo.setDiscountDate(sdfDate.format(poster.getDiscountDate()));
             posterVoList.add(vo);
         }
         return setterPagedGrid(posterVoList, page);
@@ -95,14 +103,14 @@ public class PosterServiceImpl implements PosterService {
      * @return 分页结果
      */
     public PagedGridResult setterPagedGrid(List<?> list, int page) {
-        PageInfo<?> pageList = new PageInfo<>(list);
+//        PageInfo<?> pageList = new PageInfo<>(list);
         PagedGridResult grid = new PagedGridResult();
         grid.setPage(page);
         grid.setRows(list);
         // 总页数
-        grid.setTotal(pageList.getPages());
+//        grid.setTotal(pageList.getPages());
         // 总记录数
-        grid.setRecords(pageList.getTotal());
+//        grid.setRecords(pageList.getTotal());
         return grid;
     }
 

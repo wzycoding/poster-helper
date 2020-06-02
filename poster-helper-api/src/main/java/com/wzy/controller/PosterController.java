@@ -31,8 +31,8 @@ public class PosterController {
      */
     @PostMapping("create")
     public Result create(@RequestBody @Valid PosterBo posterBo) throws IOException, IllegalAccessException {
-        posterService.create(posterBo, fileUpload.getImageUserFaceLocation(), fileUpload.getImageServerUrl());
-        return Result.success();
+        Poster poster = posterService.create(posterBo, fileUpload.getImageUserFaceLocation(), fileUpload.getImageServerUrl());
+        return Result.success(poster);
     }
 
     /**
