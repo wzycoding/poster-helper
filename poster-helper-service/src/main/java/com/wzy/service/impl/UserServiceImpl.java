@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
         // 设置六个小时过期
         cookie.setMaxAge(60 * 60 * 6);
         cookie.setPath("/");
-        cookie.setDomain("localhost");
+        cookie.setDomain("139.155.39.211");
         response.addCookie(cookie);
     }
 

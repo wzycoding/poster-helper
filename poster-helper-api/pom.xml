@@ -9,6 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
     <artifactId>poster-helper-api</artifactId>
 
     <dependencies>
@@ -25,5 +33,6 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

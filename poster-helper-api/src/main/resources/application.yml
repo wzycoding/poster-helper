@@ -1,8 +1,14 @@
 server:
   port: 8989
-
+  tomcat:
+    uri-encoding: UTF-8
 #配置数据源
 spring:
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
   profiles:
     active: dev
   datasource:
@@ -60,3 +66,4 @@ mapper:
 pagehelper:
   helperDialect: mysql
   supportMethodsArguments: true
+
