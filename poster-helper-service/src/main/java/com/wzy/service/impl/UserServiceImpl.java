@@ -22,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 用户service
@@ -72,6 +74,16 @@ public class UserServiceImpl implements UserService {
 
         // 4、设置cookie返回到浏览器
         Cookie cookie = new Cookie(TOKEN_PREFIX, token);
+
+        // 5、更新登录次数和上次登录时间
+        int loginCount = users.getLoginCount();
+        loginCount ++;
+        Users updateUser = new Users();
+        updateUser.setId(users.getId());
+        updateUser.setLoginCount(loginCount);
+        updateUser.setLastLoginTime(new Date());
+        usersMapper.updateByPrimaryKeySelective(updateUser);
+
         // 设置六个小时过期
         cookie.setMaxAge(60 * 60 * 6);
         cookie.setPath("/");
@@ -82,8 +94,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVo getUserInfo() {
         Users currentUser = RequestHolder.getCurrentUser();
+        Users dbUser = usersMapper.selectByPrimaryKey(currentUser.getId());
         UserVo userVo = new UserVo();
-        BeanUtils.copyProperties(currentUser, userVo);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        userVo.setLastLoginTime(sdf.format(dbUser.getLastLoginTime()));
+        BeanUtils.copyProperties(dbUser, userVo);
         return userVo;
     }
 

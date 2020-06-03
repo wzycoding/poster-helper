@@ -13,7 +13,7 @@ public enum ErrorEnum {
 
     /****************用户错误码*********************/
     NOT_LOGIN(20101, "请您登录后进行操作！"),
-    LOGIN_ILLEGAL(20102, "请您进行合法登录！"),
+    LOGIN_ILLEGAL(20102, "您的登录已失效，请重新登录！"),
     USERNAME_OR_PASSWORD_ERROR(20103, "用户名或密码错误！");
 
 

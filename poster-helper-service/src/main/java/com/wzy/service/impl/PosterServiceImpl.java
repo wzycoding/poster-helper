@@ -8,6 +8,7 @@ import com.wzy.holder.RequestHolder;
 import com.wzy.mapper.PosterMapper;
 
 import com.wzy.mapper.PosterMapperCustom;
+import com.wzy.mapper.UsersMapper;
 import com.wzy.pojo.Poster;
 import com.wzy.pojo.Users;
 import com.wzy.pojo.bo.PosterBo;
@@ -45,6 +46,9 @@ public class PosterServiceImpl implements PosterService {
     @Resource
     private PosterMapperCustom posterMapperCustom;
 
+    @Resource
+    private UsersMapper usersMapper;
+
     @Override
     public Poster create(PosterBo posterBo, String imageUserFaceLocation, String imageServerUrl) throws IOException, IllegalAccessException {
         Users currentUser = RequestHolder.getCurrentUser();
@@ -62,6 +66,15 @@ public class PosterServiceImpl implements PosterService {
         newPoster.setId(newPoster.getId());
         newPoster.setPosterImgUrl(posterUrl);
         posterMapper.updateByPrimaryKeySelective(posterUpdate);
+
+        // 更新创建海报数量
+        Users users = usersMapper.selectByPrimaryKey(currentUser.getId());
+        int operatorCount = users.getOperatorCount();
+        operatorCount++;
+        Users updateUser = new Users();
+        updateUser.setId(currentUser.getId());
+        updateUser.setOperatorCount(operatorCount);
+        usersMapper.updateByPrimaryKeySelective(updateUser);
         return newPoster;
     }
 
@@ -69,6 +82,7 @@ public class PosterServiceImpl implements PosterService {
     public PagedGridResult list(int page, int pageSize) {
         Users currentUser = RequestHolder.getCurrentUser();
         Example posterExp = new Example(Poster.class);
+        posterExp.setOrderByClause("create_time DESC");
         Example.Criteria criteria = posterExp.createCriteria();
         criteria.andEqualTo("createUserId", currentUser.getId());
         // todo: 将来分页
@@ -124,8 +138,8 @@ public class PosterServiceImpl implements PosterService {
         SimplePoster poster = SimplePoster.builder()
                 .backgroundImage(background)
                 .description(newPoster.getName() + " " + newPoster.getDescription())
-                .priceNormal("原价 ￥" + newPoster.getPriceNormal())
-                .priceDiscount("会员福利 ￥" + newPoster.getPriceDiscount())
+                .priceNormal("原价 ￥" + ((double)newPoster.getPriceNormal() / 100))
+                .priceDiscount("会员福利 ￥" + ((double)newPoster.getPriceDiscount() / 100))
                 .discountDate(sdf.format( newPoster.getDiscountDate()))
                 .qrCode(qrCode)
                 .mainImage(head)

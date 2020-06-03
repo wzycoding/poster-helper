@@ -62,5 +62,11 @@ public class PosterVo {
     @Column(name = "create_time")
     private String createTime;
 
+    /**
+     * 生成海报图片地址
+     */
+    @Column(name = "poster_img_url")
+    private String posterImgUrl;
+
 
 }
